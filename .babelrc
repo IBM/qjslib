@@ -1,0 +1,19 @@
+{
+	"plugins": [
+		"@babel/plugin-transform-modules-umd"
+	],
+	"presets": [
+		[
+			"@babel/preset-env",
+			{
+				"targets": {
+					"browsers": [
+						"last 1 version",
+						"ie >= 11"
+					]
+				},
+				"useBuiltIns": "usage"
+			}
+		]
+	]
+}

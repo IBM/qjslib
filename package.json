@@ -1,0 +1,31 @@
+{
+  "name": "qjslib",
+  "version": "1.0.0",
+  "description": "QJSLib is a JavaScript utility library that provides functionality for QRadar apps to simplify interactions with QRadar.",
+  "main": "/lib/qappfw.js",
+  "scripts": {
+    "build": "npx webpack",
+    "pretest": "npm run build && npx babel test/module/QRadarModuleSpec.js --out-file test/module/QRadarModuleSpec.compiled.js",
+    "test": "npx karma start karma.conf.js --single-run",
+    "lint": "npx eslint src"
+  },
+  "author": "IBM",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
+    "babel-loader": "^8.0.5",
+    "eslint": "^5.15.3",
+    "karma": "^4.0.1",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-firefox-launcher": "^1.1.0",
+    "karma-jasmine": "^2.0.1",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.4.0",
+    "whatwg-fetch": "^3.0.0"
+  }
+}
