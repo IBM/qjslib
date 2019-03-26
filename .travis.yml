@@ -13,9 +13,9 @@ addons:
 stages:
   - lint
   - test
-  - build-development
+  - name: build-development
     if: tag IS blank
-  - build-release
+  - name: build-release
     if: tag IS present
 
 jobs:
