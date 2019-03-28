@@ -31,4 +31,13 @@ jobs:
         - npm run build
     - stage: build-release
       script:
+        - npm version --no-git-tag-version "${TRAVIS_TAG}"
         - npm run build
+        - npm pack
+      deploy:
+        provider: releases
+        api_key: "${GITHUB_OAUTH_TOKEN}"
+        file: "qjslib-${TRAVIS_TAG}.tgz"
+        skip_cleanup: true
+        on:
+          all_branches: true
