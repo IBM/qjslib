@@ -1,2 +1,4 @@
 /src/
+.travis.yml
 *.compiled.js
+.sonarlint
