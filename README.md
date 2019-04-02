@@ -17,9 +17,13 @@ The file in *build/* contains a number of polyfills and is minified to ensure co
 ### As a module
 
 1. Install `qjslib`.
-```npm i qjslib```
+```
+npm i qjslib
+```
 2. Import it into your application.
-```import { QRadar } from "qjslib";```
+```
+import { QRadar } from "qjslib";
+```
 3. You can now use the helper functions.
 ```
 QRadar.fetch("/api/gui_app_framework/applications")
