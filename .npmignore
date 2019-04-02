@@ -2,3 +2,4 @@
 .travis.yml
 *.compiled.js
 .sonarlint
+*.tgz
