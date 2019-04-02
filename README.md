@@ -10,9 +10,23 @@ QJSLib is a JavaScript utility library that provides functionality for QRadar ap
 ### Browser vs module
 The build process for this project generates two seperate *qappfw.js* files, one in *build/* and one in *lib/*. 
 
+The file in *lib/* is not minified and designed to be bundled with your application code.
+
 The file in *build/* contains a number of polyfills and is minified to ensure compatability with older browsers, and as such is suitable for direct use from the browser. 
 
-The file in *lib/* is smaller and not minified, with less polyfills - this is intended for use as an imported module; keep in mind that if you want to ensure compatability with older versions of browsers your build process must include polyfills that this module does not have.
+### As a module
+
+1. Install `qjslib`.
+```npm i qjslib```
+2. Import it into your application.
+```import { QRadar } from "qjslib";```
+3. You can now use the helper functions.
+```
+QRadar.fetch("/api/gui_app_framework/applications")
+	.then((response) => response.json())
+	.then((json) => console.log(json));
+```
+
 ### As a browser script
 1. Get the [latest release of QJSLib](https://github.com/IBM/qjslib/releases). 
 2. Download the latest tarball *qjslib-(version).tgz*. 
