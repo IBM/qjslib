@@ -5,7 +5,7 @@
 // Global QRadar variables
 /*global CURRENT_SCOPE, getTableRowsSelected, summaryId, appName, pageId*/
 
-import "core-js/fn/promise";
+import "core-js/features/promise";
 import "whatwg-fetch";
 
 class QRadar {

@@ -33,7 +33,7 @@
     "webpack-cli": "^3.3.0"
   },
   "dependencies": {
-    "corejs": "^1.0.0",
+    "core-js": "^3.0.0",
     "whatwg-fetch": "^3.0.0"
   }
 }
