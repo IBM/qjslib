@@ -10,40 +10,27 @@ before_script:
 addons:
   chrome: stable
 
-stages:
-  - lint
-  - test
-  - name: build-development
-    if: tag IS blank
-  - name: build-release
-    if: tag IS present
+script: npm run lint && npm run test
 
-jobs:
-  include:
-    - stage: lint
-      script:
-        - npm run lint
-    - stage: test
-      script:
-        - npm test
-    - stage: build-development
-      script:
-        - npm run build
-    - stage: build-release
-      script:
-        - npm version --no-git-tag-version "${TRAVIS_TAG}"
-        - npm run build
-        - npm pack
-      deploy:
-        - provider: npm
-          email: "${NPM_EMAIL}"
-          api_key: "${NPM_OAUTH_TOKEN}"
-          skip_cleanup: true
-          on:
-            all_branches: true
-        - provider: releases
-          api_key: "${GITHUB_OAUTH_TOKEN}"
-          file: "qjslib-${TRAVIS_TAG}.tgz"
-          skip_cleanup: true
-          on:
-            all_branches: true
+after_success:
+  - if [[ $TRAVIS_TAG ]]; then
+      npm version --no-git-tag-version "${TRAVIS_TAG}";
+      npm run build;
+      npm pack;
+    else
+      npm run build;
+    fi
+
+deploy:
+  - provider: npm
+    email: "${NPM_EMAIL}"
+    api_key: "${NPM_OAUTH_TOKEN}"
+    skip_cleanup: true
+    on:
+      tags: true
+  - provider: releases
+    api_key: "${GITHUB_OAUTH_TOKEN}"
+    file: "qjslib-${TRAVIS_TAG}.tgz"
+    skip_cleanup: true
+    on:
+      tags: true
