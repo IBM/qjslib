@@ -14,11 +14,11 @@ script: npm run lint && npm run test
 
 after_success:
   - if [[ $TRAVIS_TAG ]]; then
-      npm version --no-git-tag-version "${TRAVIS_TAG}"
-      npm run build
-      npm pack
+      npm version --no-git-tag-version "${TRAVIS_TAG}";
+      npm run build;
+      npm pack;
     else
-      npm run build
+      npm run build;
     fi
 
 deploy:
