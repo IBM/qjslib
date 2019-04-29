@@ -175,13 +175,15 @@ class QRadar {
 	 * Default values:
 	 * headers = Content-Type: application/json
 	 * credentials = same-origin
+	 * @param {*} timeout - Timeout in milliseconds, if a timeout occurs throws error
+	 * Default: 5000ms (5 seconds)
 	 */
-	static fetch(path, options={}) {
+	static fetch(path, options={}, timeout=5000) {
 		let url = QRadar.buildRestUrl(path);
-		// Add CSRF
 		if(!options.headers) {
 			options.headers = {};
 		}
+		// Add CSRF
 		options.headers[QRadar.QRADAR_CSRF] = QRadar.getCookie(QRadar.QRADAR_CSRF);
 		// If content type not set, set to default
 		if(!(QRadar.CONTENT_TYPE in options.headers)) {
@@ -192,7 +194,13 @@ class QRadar {
 		if(!(QRadar.CREDENTIALS_TYPE in options.headers)) {
 			options.headers[QRadar.CREDENTIALS_TYPE] = QRadar.CREDENTIALS_DEFAULT;
 		}
-		return window.fetch(url, options);
+		// Create a promise race, allowing a user defined timeout to be set
+		return Promise.race([
+			window.fetch(url, options),
+			new Promise((_, reject) => 
+				setTimeout(() => reject(new Error(`Timeout on ${url} after ${timeout} ms`)), timeout)
+			)
+		]);
 	}
 
 	/**

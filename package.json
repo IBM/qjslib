@@ -5,9 +5,8 @@
   "scripts": {
     "build": "npm run build-browser && npm run build-module",
     "build-browser": "npx webpack",
-    "build-module": "npx babel src/qappfw.js --out-dir lib",
-    "compile-tests": "npx babel test/module/QRadarModuleSpec.js --out-file test/module/QRadarModuleSpec.compiled.js",
-    "pretest": "npm run build && npm run compile-tests",
+	"build-module": "npx babel src/qappfw.js --out-dir lib",
+    "pretest": "npm run build",
     "test": "npx karma start karma.conf.js",
     "lint": "npx eslint src"
   },
