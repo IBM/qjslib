@@ -1,38 +1,38 @@
 {
-  "name": "qjslib",
-  "description": "QJSLib is a JavaScript utility library that provides functionality for QRadar apps to simplify interactions with QRadar.",
-  "main": "/lib/qappfw.js",
-  "scripts": {
-    "build": "npm run build-browser && npm run build-module",
-    "build-browser": "npx webpack",
-	"build-module": "npx babel src/qappfw.js --out-dir lib",
-    "pretest": "npm run build",
-    "test": "npx karma start karma.conf.js",
-    "lint": "npx eslint src"
-  },
-  "author": "IBM",
-  "license": "Apache-2.0",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/IBM/qjslib"
-  },
-  "homepage": "https://github.com/IBM/qjslib",
-  "bugs": "https://github.com/IBM/qjslib/issues",
-  "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.4.0",
-    "@babel/preset-env": "^7.4.2",
-    "babel-loader": "^8.0.5",
-    "eslint": "^5.15.3",
-    "karma": "^4.0.1",
-    "karma-chrome-launcher": "^2.2.0",
-    "karma-firefox-launcher": "^1.1.0",
-    "karma-jasmine": "^2.0.1",
-    "webpack": "^4.29.6",
-    "webpack-cli": "^3.3.0"
-  },
-  "dependencies": {
-    "core-js": "^3.0.0",
-    "whatwg-fetch": "^3.0.0"
-  }
+	"name": "qjslib",
+	"description": "QJSLib is a JavaScript utility library that provides functionality for QRadar apps to simplify interactions with QRadar.",
+	"main": "/lib/qappfw.js",
+	"scripts": {
+		"build": "npm run build-browser && npm run build-module",
+		"build-browser": "npx webpack",
+		"build-module": "npx babel src/qappfw.js --out-dir lib",
+		"pretest": "npm run build",
+		"test": "npx karma start karma.conf.js",
+		"lint": "npx eslint src"
+	},
+	"author": "IBM",
+	"license": "Apache-2.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/IBM/qjslib"
+	},
+	"homepage": "https://github.com/IBM/qjslib",
+	"bugs": "https://github.com/IBM/qjslib/issues",
+	"devDependencies": {
+		"@babel/cli": "^7.2.3",
+		"@babel/core": "^7.4.0",
+		"@babel/preset-env": "^7.4.2",
+		"babel-loader": "^8.0.5",
+		"eslint": "^5.15.3",
+		"karma": "^4.0.1",
+		"karma-chrome-launcher": "^2.2.0",
+		"karma-firefox-launcher": "^1.1.0",
+		"karma-jasmine": "^2.0.1",
+		"webpack": "^4.29.6",
+		"webpack-cli": "^3.3.0"
+	},
+	"dependencies": {
+		"core-js": "^3.0.0",
+		"whatwg-fetch": "^3.0.0"
+	}
 }
