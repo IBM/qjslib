@@ -1,5 +1,6 @@
 /lib/
 /build/
 /node_modules/
+/docs/
 *.compiled.js
 .sonarlint

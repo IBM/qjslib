@@ -27,8 +27,8 @@ import { QRadar } from "qjslib";
 3. You can now use the helper functions.
 ```
 QRadar.fetch("/api/gui_app_framework/applications")
-	.then((response) => response.json())
-	.then((json) => console.log(json));
+    .then((response) => response.json())
+    .then((json) => console.log(json));
 ```
 
 ### As a browser script
@@ -44,16 +44,16 @@ const QRadar = window.qappfw.QRadar
 
 // Using traditional xmlhttprequest callback
 QRadar.rest({
-	path: "/api/gui_app_framework/applications",
-	onComplete: function() {console.log(this.response);},
-	httpMethod: "GET"
+    path: "/api/gui_app_framework/applications",
+    onComplete: function() {console.log(this.response);},
+    httpMethod: "GET"
 });
 
 // Using modern promise based fetch
 // Not using arrow functions for older browser compatability
 QRadar.fetch("/api/gui_app_framework/applications")
-	.then(function(response) {return response.json();})
-	.then(function(json) {console.log(json);});
+    .then(function(response) {return response.json();})
+    .then(function(json) {console.log(json);});
 
 console.log(QRadar.getWindowOrigin());
 ```

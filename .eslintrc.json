@@ -1,7 +1,10 @@
 {
     "env": {
         "browser": true,
-        "es6": true
+        "es6": true,
+        "mocha": true,
+        "jasmine": true,
+        "node": true
     },
     "extends": "eslint:recommended",
     "globals": {
@@ -15,7 +18,7 @@
     "rules": {
         "indent": [
             "error",
-            "tab"
+            4
         ],
         "linebreak-style": [
             "error",
@@ -28,7 +31,8 @@
         "semi": [
             "error",
             "always"
-		],
-		"no-console": "off"
+        ],
+        "no-console": "off",
+        "eslint space-before-blocks" : "always"
     }
 }
