@@ -8,7 +8,8 @@
         "build-module": "npx babel src/qappfw.js --out-dir lib",
         "pretest": "npm run build",
         "test": "npx karma start karma.conf.js",
-        "lint": "npx eslint ."
+        "lint": "npx eslint .",
+        "docs": "mkdir -p docs && npx jsdoc2md src/qappfw.js > docs/qappfw.md"
     },
     "author": "IBM",
     "license": "Apache-2.0",
@@ -24,6 +25,7 @@
         "@babel/preset-env": "^7.4.2",
         "babel-loader": "^8.0.5",
         "eslint": "^5.15.3",
+        "jsdoc-to-markdown": "^5.0.0",
         "karma": "^4.0.1",
         "karma-chrome-launcher": "^2.2.0",
         "karma-firefox-launcher": "^1.1.0",

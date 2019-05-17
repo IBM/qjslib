@@ -8,6 +8,9 @@
 import "core-js/features/promise";
 import "whatwg-fetch";
 
+/**
+ * Static class providing utility functions for QRadar
+ */
 class QRadar {
     /**
      * Returns the id of the current application.
@@ -19,7 +22,6 @@ class QRadar {
      *
      * @throws Error if application could not be identified.
      *
-     * @function QRadar#getApplicationId
      */
     static getApplicationId()
     {
@@ -46,7 +48,6 @@ class QRadar {
      *
      * @throws Error if id was not supplied and the current application could not be identified.
      *
-     * @function QRadar#getApplicationBaseUrl
      */
     static getApplicationBaseUrl(id)
     {
@@ -72,7 +73,6 @@ class QRadar {
      *
      * @throws Error if the current page does not contain a table of selectable rows.
      *
-     * @function QRadar#getSelectedRows
      */
     static getSelectedRows()
     {
@@ -92,7 +92,6 @@ class QRadar {
      *
      * @throws Error if the current page does not support item identification.
      *
-     * @function QRadar#getItemId
      */
     static getItemId()
     {
@@ -150,7 +149,6 @@ class QRadar {
      *
      * @throws Error if any required arguments are missing.
      *
-     * @function QRadar#rest
      */
     static rest(args)
     {
@@ -172,10 +170,10 @@ class QRadar {
      * </ul>
      * @param {Object} options - Fetch options, defining method, headers etc. Includes a timeout.
      * See https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#Supplying_request_options
-     * Default values:
-     * headers = Content-Type: application/json
-     * credentials = same-origin
-     * timeout = 10000ms (10 seconds)
+     * @param {Number} [args.timeout] - How long to wait before timing out the request, default 10000ms (10 seconds)
+     * @param {String} [args.credentials] - CORS credentials type to use, default "same-origin"
+     * @param {Array} [args.headers] - Headers included in the request, default ["Content-Type": "application/json"]
+     * @returns Fetch promise that when resolved executed the request
      */
     static fetch(path, options = {}) {
         let url = QRadar.buildRestUrl(path);
@@ -211,7 +209,6 @@ class QRadar {
      * @returns {Object} The currently logged in QRadar user.
      *                   WARNING this function uses a synchronous JavaScript call.
      *
-     * @function QRadar#getCurrentUser
      */
     static getCurrentUser()
     {
@@ -250,7 +247,6 @@ class QRadar {
      *
      * @throws Error if offenseId is not supplied or if the offense could not be displayed.
      *
-     * @function QRadar#openOffense
      */
     static openOffense(offenseId, openWindow)
     {
@@ -273,7 +269,6 @@ class QRadar {
      *
      * @throws Error if assetId is not supplied or if the asset could not be displayed.
      *
-     * @function QRadar#openAsset
      */
     static openAsset(assetId, openWindow)
     {
@@ -296,7 +291,6 @@ class QRadar {
      *
      * @throws Error if ipAddress is not supplied or if the asset could not be displayed.
      *
-     * @function QRadar#openAssetForIpAddress
      */
     static openAssetForIpAddress(ipAddress, openWindow)
     {
@@ -319,7 +313,6 @@ class QRadar {
      *
      * @throws Error if aql is not supplied or if the search results could not be displayed.
      *
-     * @function QRadar#openEventSearch
      */
     static openEventSearch(aql, openWindow)
     {
@@ -343,7 +336,6 @@ class QRadar {
      *
      * @throws Error if aql is not supplied or if the search results could not be displayed.
      *
-     * @function QRadar#openFlowSearch
      */
     static openFlowSearch(aql, openWindow)
     {
@@ -361,7 +353,6 @@ class QRadar {
     /**
      * Selects and returns a service from a list retrieved by a /gui_app_framework/named_services
      * REST API call.
-     *
      * @param {Array} services - The array returned by /gui_app_framework/named_services.
      * @param {String} serviceName - The name of the service to look for in services.
      * @param {String} serviceVersion - The version of the service to look for in services.
@@ -369,8 +360,6 @@ class QRadar {
      * @returns {Object} The service with the given name and version from the services list.
      *
      * @throws Error if the services list did not contain an entry with the given name and version.
-     *
-     * @function QRadar#getNamedService
      */
     static getNamedService(services, serviceName, serviceVersion)
     {
@@ -388,14 +377,13 @@ class QRadar {
     /**
      * Selects and returns a service endpoint.
      *
-     * @param {Object} service - A service object as returned by {@link QRadar#getNamedService|QRadar.getNamedService}.
+     * @param {Object} service - A service object as returned by {@link QRadar.getNamedService}.
      * @param {String} endpointName - The name of the endpoint to look for in the service object.
      *
      * @returns {Object} The service endpoint with the given name.
      *
      * @throws Error if the service object did not contain an endpoint with the given name.
      *
-     * @function QRadar#getNamedServiceEndpoint
      */
     static getNamedServiceEndpoint(service, endpointName)
     {
@@ -414,14 +402,14 @@ class QRadar {
     }
 
     /**
-     * Populates an arguments object to be used in a {@link QRadar#rest|QRadar.rest} call to a named service endpoint.
+     * Populates an arguments object to be used in a {@link QRadar.rest|QRadar.rest} call to a named service endpoint.
      *
      * @param {Object} restArgs - A possibly empty object which will be populated with arguments for a
-     *                            call to {@link QRadar#rest|QRadar.rest}. The properties of restArgs which can be
+     *                            call to {@link QRadar.rest|QRadar.rest}. The properties of restArgs which can be
      *                            populated by this function are: httpMethod, path, body and contentType.
      *                            All other properties must be populated by the caller.
      * @param {Object} endpoint - A service endpoint object as returned
-     *                            by {@link QRadar#getNamedServiceEndpoint|QRadar.getNamedServiceEndpoint}.
+     *                            by {@link QRadar.getNamedServiceEndpoint|QRadar.getNamedServiceEndpoint}.
      * @param {Object} [parameterValues] - Contains properties whose values will be used to populate the
      *                                     endpoint's PATH/QUERY/BODY parameters.
      * @param {Object} [bodyValue] - A complete body value to be supplied with a POST or PUT.
@@ -430,9 +418,8 @@ class QRadar {
      *
      * @throws Error if a parameterValue property was not supplied for each endpoint PATH parameter.
      *
-     * @see {@link QRadar#rest|QRadar.rest}
+     * @see {@link QRadar.rest|QRadar.rest}
      *
-     * @function QRadar#buildNamedServiceEndpointRestArgs
      */
     static buildNamedServiceEndpointRestArgs(restArgs, endpoint, parameterValues, bodyValue)
     {
@@ -534,16 +521,15 @@ class QRadar {
      * This is a wrapper function which calls the /gui_app_framework/named_services REST API,
      * picks out the specified service endpoint, and invokes it using the supplied parameters/values.
      *
-     * @param {String} serviceName - See {@link QRadar#getNamedService|QRadar.getNamedService} serviceName.
-     * @param {String} serviceVersion - See {@link QRadar#getNamedService|QRadar.getNamedService} serviceVersion.
-     * @param {String} endpointName - See {@link QRadar#getNamedServiceEndpoint|QRadar.getNamedServiceEndpoint} endpointName.
-     * @param {Object} restArgs - See {@link QRadar#buildNamedServiceEndpointRestArgs|QRadar.buildNamedServiceEndpointRestArgs} restArgs.
-     * @param {Object} [parameterValues] - See {@link QRadar#buildNamedServiceEndpointRestArgs|QRadar.buildNamedServiceEndpointRestArgs} parameterValues.
-     * @param {Object} [bodyValue] - See {@link QRadar#buildNamedServiceEndpointRestArgs|QRadar.buildNamedServiceEndpointRestArgs} bodyValue.
+     * @param {String} serviceName - See {@link QRadar.getNamedService|QRadar.getNamedService} serviceName.
+     * @param {String} serviceVersion - See {@link QRadar.getNamedService|QRadar.getNamedService} serviceVersion.
+     * @param {String} endpointName - See {@link QRadar.getNamedServiceEndpoint|QRadar.getNamedServiceEndpoint} endpointName.
+     * @param {Object} restArgs - See {@link QRadar.buildNamedServiceEndpointRestArgs|QRadar.buildNamedServiceEndpointRestArgs} restArgs.
+     * @param {Object} [parameterValues] - See {@link QRadar.buildNamedServiceEndpointRestArgs|QRadar.buildNamedServiceEndpointRestArgs} parameterValues.
+     * @param {Object} [bodyValue] - See {@link QRadar.buildNamedServiceEndpointRestArgs|QRadar.buildNamedServiceEndpointRestArgs} bodyValue.
      *
      * @throws Error if any wrapped function call fails.
      *
-     * @function QRadar#callNamedServiceEndpoint
      */
     static callNamedServiceEndpoint(serviceName, serviceVersion, endpointName, restArgs, parameterValues, bodyValue)
     {
@@ -569,7 +555,7 @@ class QRadar {
      *
      * @returns {String} The window origin.
      *
-     * @function QRadar#getWindowOrigin
+     * @function QRadar.getWindowOrigin
      * @private
      */
     static getWindowOrigin()
@@ -586,7 +572,7 @@ class QRadar {
      *
      * @throws Error if the URL could not be opened.
      *
-     * @function QRadar#windowOrTab
+     * @function QRadar.windowOrTab
      * @private
      */
     static windowOrTab(url, tabName)
@@ -614,7 +600,7 @@ class QRadar {
      *
      * @returns {String} The full URL for path.
      *
-     * @function QRadar#buildRestUrl
+     * @function QRadar.buildRestUrl
      * @private
      */
     static buildRestUrl(path)
@@ -643,7 +629,7 @@ class QRadar {
      *
      * @returns {String|undefined} The cookie value if cookieName exists, undefined otherwise.
      *
-     * @function QRadar#getCookie
+     * @function QRadar.getCookie
      * @private
      */
     static getCookie(cookieName)
@@ -663,7 +649,7 @@ class QRadar {
      *
      * @returns {XMLHttpRequest}
      *
-     * @function QRadar#generateHttpRequest
+     * @function QRadar.generateHttpRequest
      * @private
      */
     static generateHttpRequest(args)
