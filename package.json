@@ -36,5 +36,13 @@
     "dependencies": {
         "core-js": "^3.0.0",
         "whatwg-fetch": "^3.0.0"
-    }
+    },
+    "files": [
+        "build/",
+        "lib/",
+        "docs/",
+        "README.md",
+        "CHANGELOG.md",
+        "LICENSE"
+    ]
 }
