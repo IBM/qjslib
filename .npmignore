@@ -1,6 +1,0 @@
-/src/
-.travis.yml
-*.compiled.js
-.sonarlint
-*.tgz
-/qjslib.wiki
