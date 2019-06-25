@@ -9,7 +9,7 @@ QJSLib is a JavaScript utility library that provides functionality for QRadar ap
 
 ## How to use
 ### Browser vs module
-The build process for this project generates two seperate files in *lib/*.
+The build process for this project generates two separate files in *lib/*.
 
 *qappfw.js* is not minified. It is designed to be bundled with your application code.
 
