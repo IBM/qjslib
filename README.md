@@ -5,14 +5,15 @@ QJSLib is a JavaScript utility library that provides functionality for QRadar ap
 * [CONTRIBUTING](CONTRIBUTING.md)
 * [MAINTAINERS](MAINTAINERS.md)
 * [CHANGELOG](CHANGELOG.md)
+* [DOCUMENTATION](https://github.com/IBM/qjslib/wiki/qappfw)
 
 ## How to use
 ### Browser vs module
-The build process for this project generates two seperate *qappfw.js* files, one in *build/* and one in *lib/*. 
+The build process for this project generates two separate files in *lib/*.
 
-The file in *lib/* is not minified and designed to be bundled with your application code.
+*qappfw.js* is not minified. It is designed to be bundled with your application code.
 
-The file in *build/* contains a number of polyfills and is minified to ensure compatability with older browsers, and as such is suitable for direct use from the browser. 
+*qappfw.min.js* is minified with polyfills for browser compatibility. It is designed to be used directly in the browser.
 
 ### As a module
 
@@ -34,8 +35,8 @@ QRadar.fetch("/api/gui_app_framework/applications")
 ### As a browser script
 1. Get the [latest release of QJSLib](https://github.com/IBM/qjslib/releases). 
 2. Download the latest tarball *qjslib-(version).tgz*. 
-3. Extract *package/build/qappfw.js*.
-4. Place this file in your QRadar app, e.g. in */app/static/qappfw.js*
+3. Extract *package/lib/qappfw.min.js*.
+4. Place this file in your QRadar app, e.g. in */app/static/qappfw.min.js*
 5. Add a reference to the file from your HTML file.
 6. The utility class QRadar is added to the global scope - and can be accessed through `window.qappfw.QRadar`.
 7. You can now use *qjslib* like this:

@@ -4,8 +4,8 @@ module.exports = {
     mode: "production",
     entry: "./src/qappfw.js",
     output: {
-        path: path.resolve(__dirname, "build"),
-        filename: "qappfw.js",
+        path: path.resolve(__dirname, "lib"),
+        filename: "qappfw.min.js",
         library: "qappfw",
         libraryTarget: "umd"
     },
