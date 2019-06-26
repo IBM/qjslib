@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.com/IBM/qjslib.svg?branch=master)](https://travis-ci.com/IBM/qjslib)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=qjslib&metric=alert_status)](https://sonarcloud.io/dashboard?id=qjslib)
 # QRadar App JavaScript Library (qjslib)
 QJSLib is a JavaScript utility library that provides functionality for QRadar apps to simplify interactions with QRadar.
 * [LICENSE](LICENSE)
