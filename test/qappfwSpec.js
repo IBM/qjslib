@@ -43,6 +43,7 @@ function TestQRadar(QRadar) {
             const OVERRIDE_CREDENTIALS = "omit";
             const OVERRIDE_TIMEOUT = 2000;
             const FETCH_JASMINE_TIMEOUT = 15000;
+            const TIME_PAST_TIMEOUT = 1000;
             const FETCH_METHOD = "fetch";
 
             let originalTimeout;
@@ -109,7 +110,7 @@ function TestQRadar(QRadar) {
                 spyOn(window, FETCH_METHOD).and.returnValue(new Promise((resolve) => {
                     setTimeout(() => {
                         resolve();
-                    }, QRadar.DEFAULT_FETCH_TIMEOUT + 1);
+                    }, QRadar.DEFAULT_FETCH_TIMEOUT + TIME_PAST_TIMEOUT);
                 }));
 
                 QRadar.fetch(TEST_API_ENDPOINT)
@@ -144,7 +145,7 @@ function TestQRadar(QRadar) {
                 spyOn(window, FETCH_METHOD).and.returnValue(new Promise((resolve) => {
                     setTimeout(() => {
                         resolve();
-                    }, OVERRIDE_TIMEOUT + 1);
+                    }, OVERRIDE_TIMEOUT + TIME_PAST_TIMEOUT);
                 }));
 
                 QRadar.fetch(TEST_API_ENDPOINT, { timeout: OVERRIDE_TIMEOUT })
