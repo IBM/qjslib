@@ -211,7 +211,7 @@ class QRadar {
      */
     static getCurrentUser() {
         let currentUser = null;
-        const params = `current_user=true`;
+        const params = "current_user=true";
 
         QRadar.rest({
             async: false,
