@@ -208,32 +208,24 @@ class QRadar {
      *
      * @returns {Object} The currently logged in QRadar user.
      *                   WARNING this function uses a synchronous JavaScript call.
-     *
      */
-    static getCurrentUser()
-    {
+    static getCurrentUser() {
         let currentUser = null;
+        const params = `current_user=true`;
 
-        QRadar.rest(
-            {
-                async: false,
-                httpMethod: "POST",
-                path: QRadar.getWindowOrigin() + "/console/JSON-RPC/QRadar.getUserByPageContext",
-                body: JSON.stringify(
-                    {
-                        method: "QRadar.getUserByPageContext",
-                        contextName: "UserList",
-                        QRadarCSRF: QRadar.getCookie("QRadarCSRF"),
-                        params: null,
-                        id: "1"
-                    }),
-                onComplete: function()
-                {
-                    let responseObj;
-                    eval("responseObj = " + this.responseText);
-                    currentUser = responseObj.result;
-                }
-            });
+        QRadar.rest({
+            async: false,
+            httpMethod: "GET",
+            path: QRadar.getWindowOrigin() + "/api/config/access/users?" + params,
+            headers: {
+                QRadarCSRF: QRadar.getCookie("QRadarCSRF")
+            },
+            onComplete: function() {
+                if (this.status === 200) {
+                    currentUser = JSON.parse(this.responseText);
+                } 
+            }
+        });
 
         return currentUser;
     }
