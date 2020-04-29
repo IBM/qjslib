@@ -211,12 +211,11 @@ class QRadar {
      */
     static getCurrentUser() {
         let currentUser = null;
-        const params = "current_user=true";
 
         QRadar.rest({
             async: false,
             httpMethod: "GET",
-            path: QRadar.getWindowOrigin() + "/api/config/access/users?" + params,
+            path: QRadar.getWindowOrigin() + "/api/config/access/users?current_user=true",
             headers: {
                 QRadarCSRF: QRadar.getCookie("QRadarCSRF")
             },
