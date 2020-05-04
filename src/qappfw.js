@@ -221,7 +221,7 @@ class QRadar {
             },
             onComplete: function() {
                 if (this.status === 200) {
-                    currentUser = JSON.parse(this.responseText);
+                    currentUser = JSON.parse(this.responseText)[0];
                 } 
             }
         });
