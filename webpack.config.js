@@ -7,7 +7,7 @@ module.exports = {
         path: path.resolve(__dirname, "lib"),
         filename: "qappfw.min.js",
         library: "qappfw",
-        libraryTarget: "umd"
+        libraryTarget: "this"
     },
     module: {
         rules: [
