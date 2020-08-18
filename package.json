@@ -38,7 +38,7 @@
         "whatwg-fetch": "^3.0.0",
         "minimist": "^1.2.3",
         "handlebars": ">=4.4.3 || <=4.7.3",
-        "serialize-javascript": "^2.1.1"
+        "serialize-javascript": "^3.1.0"
     },
     "files": [
         "lib/",
