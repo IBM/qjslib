@@ -3,3 +3,4 @@
 /docs/
 *.compiled.js
 .sonarlint
+.project
