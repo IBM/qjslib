@@ -33,6 +33,6 @@
             "always"
         ],
         "no-console": "off",
-        "eslint space-before-blocks" : "always"
+        "space-before-blocks" : "error"
     }
 }
