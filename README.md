@@ -5,7 +5,7 @@ QJSLib is a JavaScript utility library that provides functionality for QRadar ap
 * [LICENSE](LICENSE)
 * [CONTRIBUTING](CONTRIBUTING.md)
 * [MAINTAINERS](MAINTAINERS.md)
-* [CHANGELOG](CHANGELOG.md)
+* [CHANGELOG](https://github.com/IBM/qjslib/releases)
 * [DOCUMENTATION](https://github.com/IBM/qjslib/wiki/qappfw)
 
 ## How to use
