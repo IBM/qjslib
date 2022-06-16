@@ -41,8 +41,8 @@ SPDX-License-Identifier: Apache-2.0
 
 ## Setup
 This project uses NPM to handle dependencies and as a build tool, so you must have NodeJS and NPM installed.
-[Get NodeJS here.](https://nodejs.org/en/)  
-[Get NPM here.](https://www.npmjs.com/get-npm)  
+[Get NodeJS here.](https://nodejs.org/en/)
+[Get NPM here.](https://www.npmjs.com/get-npm)
 This project has been set up so that on your local machine you cant lint, test and build easily and quickly. There are three commands you can use:
 
 * npm run lint
@@ -51,8 +51,8 @@ This project has been set up so that on your local machine you cant lint, test a
 
 ## Testing
 Pull requests will only be accepted if they pass all tests. Karma is used as a testing framework, and the tests are run against Chrome and Firefox - so in order to run the tests you must have Chrome and Firefox installed.
-Tests can be run either on your fork through Travis CI, or locally using **npm test**.
+Tests can be run either on your fork through the CI, or locally using **npm test**.
 
 ## Coding style guidelines
 Pull requests will only be accepted if they pass the linting.
-Linting can be run either on your fork through Travis CI, or locally using **npm run lint**.
+Linting can be run either on your fork through the CI, or locally using **npm run lint**.

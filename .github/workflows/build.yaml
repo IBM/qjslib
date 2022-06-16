@@ -1,0 +1,71 @@
+name: build
+on:
+  push:
+  pull_request:
+  release:
+    types: [created]
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - uses: actions/checkout@v3
+      - name: Install JS dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Test
+        uses: GabrielBB/xvfb-action@v1
+        with:
+          run: npm run test
+      - name: SonarQube scan
+        if: github.event_name != 'release' && github.repository == 'IBM/qjslib'
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Update version
+        if: github.event_name == 'release'
+        run:
+          npm version --no-git-tag-version "${{github.ref_name}}"
+      - name: Build
+        run: |
+          npm run build
+          npm run docs
+          npm pack
+      - name: Clone down wiki repository
+        uses: actions/checkout@v2
+        if: github.event_name == 'release'
+        with:
+          repository: ${{github.repository}}.wiki
+          path: qjslib.wiki
+      - name: Update local wiki
+        if: github.event_name == 'release'
+        run: |
+          git config --global user.email "qjslib@ibm.com"
+          git config --global user.name "QJSLib CI"
+          cp -rf docs/* qjslib.wiki/
+          cd qjslib.wiki
+          git add .
+          git commit -m "${{github.ref_name}}"
+      - name: Deploy wiki
+        if: github.event_name == 'release'
+        uses: ad-m/github-push-action@master
+        with:
+          directory: ${{github.workspace}}/qjslib.wiki
+          repository: ${{github.repository}}.wiki
+          github_token: ${{github.token}}
+      - name: Deploy to GitHub releases
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            qjslib-${{github.ref_name}}.tgz
+      - name: Deploy to NPM
+        if: github.event_name == 'release'
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
