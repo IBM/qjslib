@@ -27,12 +27,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      - name: Update version
-        if: github.event_name == 'release'
-        run:
-          npm version --no-git-tag-version "${{github.ref_name}}"
       - name: Build
+        env:
+          BUILD_IDENTIFIER: "${{ github.event_name == 'release' && github.ref_name || format('0.0.0-{0}', github.sha) }}"
         run: |
+          npm version --no-git-tag-version "$BUILD_IDENTIFIER"
           npm run build
           npm run docs
           npm pack
