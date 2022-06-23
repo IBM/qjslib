@@ -37,7 +37,20 @@ module.exports = function(config) {
         reporters: ["progress", "coverage"],
 
         coverageReporter: {
-            type : "cobertura",
+            type : (() => {
+                if (process.env.CI !== undefined) {
+                    return "lcovonly";
+                } else {
+                    // Not running in CI, generate HTML report too
+                    return "lcov";
+                }
+            })(),
+            dir: "coverage",
+            subdir: (browser) => {
+                // normalization process to keep a consistent browser name across different
+                // OS
+                return browser.toLowerCase().split(/[ /-]/)[0];
+            }
         },
 
 
