@@ -3,6 +3,7 @@ var path = require("path");
 module.exports = {
     mode: "production",
     entry: "./src/qappfw.js",
+    devtool: "source-map",
     output: {
         path: path.resolve(__dirname, "lib"),
         filename: "qappfw.min.js",
