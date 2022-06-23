@@ -22,7 +22,7 @@ jobs:
         with:
           run: npm run test
       - name: SonarQube scan
-        if: github.event_name != 'release'
+        if: github.event_name != 'release' && github.repository == 'IBM/qjslib'
         uses: sonarsource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -49,4 +49,3 @@ jobs:
         uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
-          dry-run: true
