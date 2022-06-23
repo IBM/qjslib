@@ -43,13 +43,7 @@ jobs:
           path: qjslib.wiki
       - name: Update local wiki
         if: github.event_name == 'release'
-        run: |
-          git config --global user.email "qjslib@ibm.com"
-          git config --global user.name "QJSLib CI"
-          cp -rf docs/* qjslib.wiki/
-          cd qjslib.wiki
-          git add .
-          git commit -m "${{github.ref_name}}"
+        run: ./update_wiki.sh "${{github.ref_name}}"
       - name: Deploy wiki
         if: github.event_name == 'release'
         uses: ad-m/github-push-action@master
