@@ -15,7 +15,8 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
-            { pattern: "lib/*.js", type: "js" },
+            { pattern: "lib/qappfw.min.js", type: "js" },
+            { pattern: "lib/qappfw.min.js.map", included: false},
             { pattern: "test/*.js", type: "js"}
         ],
 
@@ -27,14 +28,30 @@ module.exports = function(config) {
 
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-        preprocessors: {
-        },
+        preprocessors: {},
 
 
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ["progress"],
+        reporters: ["progress", "coverage"],
+
+        coverageReporter: {
+            type : (() => {
+                if (process.env.CI !== undefined) {
+                    return "lcovonly";
+                } else {
+                    // Not running in CI, generate HTML report too
+                    return "lcov";
+                }
+            })(),
+            dir: "coverage",
+            subdir: (browser) => {
+                // normalization process to keep a consistent browser name across different
+                // OS
+                return browser.toLowerCase().split(/[ /-]/)[0];
+            }
+        },
 
 
         // web server port
@@ -56,7 +73,7 @@ module.exports = function(config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ["Chrome", "Firefox"],
+        browsers: ["ChromeHeadless", "FirefoxHeadless"],
 
 
         // Continuous Integration mode

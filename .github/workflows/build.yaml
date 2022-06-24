@@ -1,0 +1,51 @@
+name: build
+on:
+  push:
+  pull_request:
+  release:
+    types: [created]
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - uses: actions/checkout@v3
+      - name: Install JS dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Test
+        uses: GabrielBB/xvfb-action@v1
+        with:
+          run: npm run test
+      - name: SonarQube scan
+        if: github.event_name != 'release' && github.repository == 'IBM/qjslib'
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Build
+        env:
+          BUILD_IDENTIFIER: "${{ github.event_name == 'release' && github.ref_name || format('0.0.0-{0}', github.sha) }}"
+        run: |
+          npm version --no-git-tag-version "$BUILD_IDENTIFIER"
+          npm run build
+          npm run docs
+          npm pack
+      - name: Update local wiki
+        if: github.event_name == 'release'
+        run: ./update_wiki.sh "${{github.repository}}" "${{github.token}}" "${{github.ref_name}}"
+      - name: Deploy to GitHub releases
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            qjslib-${{github.ref_name}}.tgz
+      - name: Deploy to NPM
+        if: github.event_name == 'release'
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}

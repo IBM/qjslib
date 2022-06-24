@@ -14,5 +14,10 @@
                 }
             }
         ]
-    ]
+    ],
+    "env": {
+        "test": {
+            "plugins": [ "istanbul" ]
+        }
+    }
 }

@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/IBM/qjslib.svg?branch=master)](https://travis-ci.com/IBM/qjslib)
+[![Build Status](https://github.com/ibm/qjslib/workflows/build/badge.svg)](https://github.com/ibm/qjslib/actions)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=qjslib&metric=alert_status)](https://sonarcloud.io/dashboard?id=qjslib)
 # QRadar App JavaScript Library (qjslib)
 QJSLib is a JavaScript utility library that provides functionality for QRadar apps to simplify interactions with QRadar.
@@ -34,8 +34,8 @@ QRadar.fetch("/api/gui_app_framework/applications")
 ```
 
 ### As a browser script
-1. Get the [latest release of QJSLib](https://github.com/IBM/qjslib/releases). 
-2. Download the latest tarball *qjslib-(version).tgz*. 
+1. Get the [latest release of QJSLib](https://github.com/IBM/qjslib/releases).
+2. Download the latest tarball *qjslib-(version).tgz*.
 3. Extract *package/lib/qappfw.min.js*.
 4. Place this file in your QRadar app, e.g. in */app/static/qappfw.min.js*
 5. Add a reference to the file from your HTML file.
