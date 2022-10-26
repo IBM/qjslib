@@ -617,7 +617,7 @@ function TestQRadar(QRadar) {
                 var mockResult = QRadar.openEventSearch("select qid from events");
                 expect(mockResult.suppliedUrl).toEqual(
                     "https://99.99.99.99/console/do/ariel/arielSearch?appName=EventViewer&pageId=EventList&dispatch=performSearch" +
-                    "&values(timeRangeType)=aqlTime&values(searchMode)=AQL&values(aql)=select%20qid%20from%20events");
+                    "&value(timeRangeType)=aqlTime&value(searchMode)=AQL&value(aql)=select%20qid%20from%20events");
                 expect(mockResult.suppliedTabName).toBeNull();
             });
 
@@ -626,7 +626,7 @@ function TestQRadar(QRadar) {
                 var mockResult = QRadar.openEventSearch("select qid from events", zzz);
                 expect(mockResult.suppliedUrl).toEqual(
                     "https://99.99.99.99/console/do/ariel/arielSearch?appName=EventViewer&pageId=EventList&dispatch=performSearch" +
-                    "&values(timeRangeType)=aqlTime&values(searchMode)=AQL&values(aql)=select%20qid%20from%20events");
+                    "&value(timeRangeType)=aqlTime&value(searchMode)=AQL&value(aql)=select%20qid%20from%20events");
                 expect(mockResult.suppliedTabName).toBeNull();
             });
 
@@ -634,7 +634,7 @@ function TestQRadar(QRadar) {
                 var mockResult = QRadar.openEventSearch("select qid from events", null);
                 expect(mockResult.suppliedUrl).toEqual(
                     "https://99.99.99.99/console/do/ariel/arielSearch?appName=EventViewer&pageId=EventList&dispatch=performSearch" +
-                    "&values(timeRangeType)=aqlTime&values(searchMode)=AQL&values(aql)=select%20qid%20from%20events");
+                    "&value(timeRangeType)=aqlTime&value(searchMode)=AQL&value(aql)=select%20qid%20from%20events");
                 expect(mockResult.suppliedTabName).toBeNull();
             });
 
@@ -642,7 +642,7 @@ function TestQRadar(QRadar) {
                 var mockResult = QRadar.openEventSearch("select qid from events", true);
                 expect(mockResult.suppliedUrl).toEqual(
                     "https://99.99.99.99/console/do/ariel/arielSearch?appName=EventViewer&pageId=EventList&dispatch=performSearch" +
-                    "&values(timeRangeType)=aqlTime&values(searchMode)=AQL&values(aql)=select%20qid%20from%20events");
+                    "&value(timeRangeType)=aqlTime&value(searchMode)=AQL&value(aql)=select%20qid%20from%20events");
                 expect(mockResult.suppliedTabName).toBeNull();
             });
 
@@ -650,7 +650,7 @@ function TestQRadar(QRadar) {
                 var mockResult = QRadar.openEventSearch("select qid from events", false);
                 expect(mockResult.suppliedUrl).toEqual(
                     "https://99.99.99.99/console/do/ariel/arielSearch?appName=EventViewer&pageId=EventList&dispatch=performSearch" +
-                    "&values(timeRangeType)=aqlTime&values(searchMode)=AQL&values(aql)=select%20qid%20from%20events");
+                    "&value(timeRangeType)=aqlTime&value(searchMode)=AQL&value(aql)=select%20qid%20from%20events");
                 expect(mockResult.suppliedTabName).toEqual("EVENTVIEWER");
             });
         });
@@ -669,7 +669,7 @@ function TestQRadar(QRadar) {
                 var mockResult = QRadar.openFlowSearch("select qid from events");
                 expect(mockResult.suppliedUrl).toEqual(
                     "https://99.99.99.99/console/do/ariel/arielSearch?appName=Surveillance&pageId=FlowList&dispatch=performSearch" +
-                    "&values(timeRangeType)=aqlTime&values(searchMode)=AQL&values(aql)=select%20qid%20from%20events");
+                    "&value(timeRangeType)=aqlTime&value(searchMode)=AQL&value(aql)=select%20qid%20from%20events");
                 expect(mockResult.suppliedTabName).toBeNull();
             });
 
@@ -678,7 +678,7 @@ function TestQRadar(QRadar) {
                 var mockResult = QRadar.openFlowSearch("select qid from events", zzz);
                 expect(mockResult.suppliedUrl).toEqual(
                     "https://99.99.99.99/console/do/ariel/arielSearch?appName=Surveillance&pageId=FlowList&dispatch=performSearch" +
-                    "&values(timeRangeType)=aqlTime&values(searchMode)=AQL&values(aql)=select%20qid%20from%20events");
+                    "&value(timeRangeType)=aqlTime&value(searchMode)=AQL&value(aql)=select%20qid%20from%20events");
                 expect(mockResult.suppliedTabName).toBeNull();
             });
 
@@ -686,7 +686,7 @@ function TestQRadar(QRadar) {
                 var mockResult = QRadar.openFlowSearch("select qid from events", null);
                 expect(mockResult.suppliedUrl).toEqual(
                     "https://99.99.99.99/console/do/ariel/arielSearch?appName=Surveillance&pageId=FlowList&dispatch=performSearch" +
-                    "&values(timeRangeType)=aqlTime&values(searchMode)=AQL&values(aql)=select%20qid%20from%20events");
+                    "&value(timeRangeType)=aqlTime&value(searchMode)=AQL&value(aql)=select%20qid%20from%20events");
                 expect(mockResult.suppliedTabName).toBeNull();
             });
 
@@ -694,7 +694,7 @@ function TestQRadar(QRadar) {
                 var mockResult = QRadar.openFlowSearch("select qid from events", true);
                 expect(mockResult.suppliedUrl).toEqual(
                     "https://99.99.99.99/console/do/ariel/arielSearch?appName=Surveillance&pageId=FlowList&dispatch=performSearch" +
-                    "&values(timeRangeType)=aqlTime&values(searchMode)=AQL&values(aql)=select%20qid%20from%20events");
+                    "&value(timeRangeType)=aqlTime&value(searchMode)=AQL&value(aql)=select%20qid%20from%20events");
                 expect(mockResult.suppliedTabName).toBeNull();
             });
 
@@ -702,7 +702,7 @@ function TestQRadar(QRadar) {
                 var mockResult = QRadar.openFlowSearch("select qid from events", false);
                 expect(mockResult.suppliedUrl).toEqual(
                     "https://99.99.99.99/console/do/ariel/arielSearch?appName=Surveillance&pageId=FlowList&dispatch=performSearch" +
-                    "&values(timeRangeType)=aqlTime&values(searchMode)=AQL&values(aql)=select%20qid%20from%20events");
+                    "&value(timeRangeType)=aqlTime&value(searchMode)=AQL&value(aql)=select%20qid%20from%20events");
                 expect(mockResult.suppliedTabName).toEqual("FLOWVIEWER");
             });
         });

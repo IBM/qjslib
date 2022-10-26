@@ -329,8 +329,8 @@ class QRadar {
         {
             return QRadar.windowOrTab(
                 "do/ariel/arielSearch?appName=EventViewer&pageId=EventList&dispatch=performSearch" +
-                "&values(timeRangeType)=aqlTime&values(searchMode)=AQL" +
-                "&values(aql)=" + encodeURIComponent(aql), openWindow === false ? "EVENTVIEWER" : null);
+                "&value(timeRangeType)=aqlTime&value(searchMode)=AQL" +
+                "&value(aql)=" + encodeURIComponent(aql), openWindow === false ? "EVENTVIEWER" : null);
         }
     }
 
@@ -364,8 +364,8 @@ class QRadar {
         {
             return QRadar.windowOrTab(
                 "do/ariel/arielSearch?appName=Surveillance&pageId=FlowList&dispatch=performSearch" +
-                "&values(timeRangeType)=aqlTime&values(searchMode)=AQL" +
-                "&values(aql)=" + encodeURIComponent(aql), openWindow === false ? "FLOWVIEWER" : null);
+                "&value(timeRangeType)=aqlTime&value(searchMode)=AQL" +
+                "&value(aql)=" + encodeURIComponent(aql), openWindow === false ? "FLOWVIEWER" : null);
         }
     }
 
