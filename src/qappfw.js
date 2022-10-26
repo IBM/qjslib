@@ -8,6 +8,9 @@
 import "core-js/features/promise";
 import "whatwg-fetch";
 
+
+
+
 /**
  * Static class providing utility functions for QRadar
  */
@@ -305,22 +308,35 @@ class QRadar {
      * @throws Error if aql is not supplied or if the search results could not be displayed.
      *
      */
+    
     static openEventSearch(aql, openWindow)
     {
         if (aql == null)
         {
             throw new Error("You must supply an AQL string");
         }
-
-        return QRadar.windowOrTab(
-            "do/ariel/arielSearch?appName=EventViewer&pageId=EventList&dispatch=performSearch" +
-            "&value(timeRangeType)=aqlTime&value(searchMode)=AQL" +
-            "&value(aql)=" + encodeURIComponent(aql), openWindow === false ? "EVENTVIEWER" : null);
+        // Creates variables for fetching qradar version, removing the dots and taking the first 6 characters from it, i.e. 202164
+        var get_qradar_version = window.QRADAR_VERSION.replaceAll(".","");
+        var qradar_version = get_qradar_version.substring(0,6);
+        if (qradar_version >= 202164)
+        {
+            return QRadar.windowOrTab(
+                "do/ariel/arielSearch?appName=EventViewer&pageId=EventList&dispatch=performSearch" +
+                "&values['timeRangeType']=aqlTime&values['searchMode']=AQL" +
+                "&values['aql']=" + encodeURIComponent(aql), openWindow === false ? "EVENTVIEWER" : null);
+        }
+        else
+        {
+            return QRadar.windowOrTab(
+                "do/ariel/arielSearch?appName=EventViewer&pageId=EventList&dispatch=performSearch" +
+                "&values(timeRangeType)=aqlTime&values(searchMode)=AQL" +
+                "&values(aql)=" + encodeURIComponent(aql), openWindow === false ? "EVENTVIEWER" : null);
+        }
     }
 
     /**
      * Runs a flow search with the specified AQL string, either in a new window or the Flow Viewer tab.
-     *
+     * 
      * @param {String} aql - The AQL search string to execute.
      * @param {boolean} [openWindow=true] - If true, open the search in a new window.
      *                                      Otherwise, open in the Flow Viewer tab.
@@ -334,11 +350,23 @@ class QRadar {
         {
             throw new Error("You must supply an AQL string");
         }
-
-        return QRadar.windowOrTab(
-            "do/ariel/arielSearch?appName=Surveillance&pageId=FlowList&dispatch=performSearch" +
-            "&value(timeRangeType)=aqlTime&value(searchMode)=AQL" +
-            "&value(aql)=" + encodeURIComponent(aql), openWindow === false ? "FLOWVIEWER" : null);
+        // Creates variables for fetching qradar version, removing the dots and taking the first 6 characters from it, i.e. 202164
+        var get_qradar_version = window.QRADAR_VERSION.replaceAll(".","");
+        var qradar_version = get_qradar_version.substring(0,6);
+        if (qradar_version >= 202164)
+        {
+            return QRadar.windowOrTab(
+                "do/ariel/arielSearch?appName=Surveillance&pageId=FlowList&dispatch=performSearch" +
+                "&values['timeRangeType']=aqlTime&values['searchMode']=AQL" +
+                "&values['aql']=" + encodeURIComponent(aql), openWindow === false ? "FLOWVIEWER" : null);
+        }
+        else
+        {
+            return QRadar.windowOrTab(
+                "do/ariel/arielSearch?appName=Surveillance&pageId=FlowList&dispatch=performSearch" +
+                "&values(timeRangeType)=aqlTime&values(searchMode)=AQL" +
+                "&values(aql)=" + encodeURIComponent(aql), openWindow === false ? "FLOWVIEWER" : null);
+        }
     }
 
     /**
