@@ -606,7 +606,7 @@ function TestQRadar(QRadar) {
         
         describe("QRadar.openEventSearch", function () {
             // QRadar.openEventSearch function for QRADAR UP3 and below
-            window.QRADAR_VERSION="2021.6.3.20221014123609";
+            top.QRADAR_VERSION="2021.6.3.20221014123609";
             it("should throw Error if aql is not supplied", function () {
                 expect(function () { QRadar.openEventSearch(); }).toThrowError("You must supply an AQL string");
             });
@@ -657,7 +657,7 @@ function TestQRadar(QRadar) {
             });
         }, function () {
             // QRadar.openEventSearch function for QRADAR UP4+
-            window.QRADAR_VERSION="2021.6.4.20221014123609";
+            top.QRADAR_VERSION="2021.6.4.20221014123609";
             it("should throw Error if aql is not supplied", function () {
                 expect(function () { QRadar.openEventSearch(); }).toThrowError("You must supply an AQL string");
             });
@@ -710,7 +710,7 @@ function TestQRadar(QRadar) {
 
         describe("QRadar.openFlowSearch", function () {
             // QRadar.openFlowSearch function for QRADAR UP3 and below
-            window.QRADAR_VERSION="2021.6.3.20221014123609";
+            top.QRADAR_VERSION="2021.6.3.20221014123609";
             it("should throw Error if aql is not supplied", function () {
                 expect(function () { QRadar.openFlowSearch(); }).toThrowError("You must supply an AQL string");
             });
@@ -761,7 +761,7 @@ function TestQRadar(QRadar) {
             });
         }, function () {
             // QRadar.openFlowSearch function for QRADAR UP4 and upwards
-            window.QRADAR_VERSION="2021.6.4.20221014123609";
+            top.QRADAR_VERSION="2021.6.4.20221014123609";
             it("should throw Error if aql is not supplied", function () {
                 expect(function () { QRadar.openFlowSearch(); }).toThrowError("You must supply an AQL string");
             });

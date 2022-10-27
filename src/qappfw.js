@@ -316,7 +316,7 @@ class QRadar {
             throw new Error("You must supply an AQL string");
         }
         // Creates variables for fetching qradar version, removing the dots and taking the first 6 characters from it, i.e. 202164
-        var get_qradar_version = window.QRADAR_VERSION.replaceAll(".","");
+        var get_qradar_version = top.QRADAR_VERSION.replaceAll(".","");
         var qradar_version = get_qradar_version.substring(0,6);
         if (qradar_version >= 202164)
         {
@@ -351,7 +351,7 @@ class QRadar {
             throw new Error("You must supply an AQL string");
         }
         // Creates variables for fetching qradar version, removing the dots and taking the first 6 characters from it, i.e. 202164
-        var get_qradar_version = window.QRADAR_VERSION.replaceAll(".","");
+        var get_qradar_version = top.QRADAR_VERSION.replaceAll(".","");
         var qradar_version = get_qradar_version.substring(0,6);
         if (qradar_version >= 202164)
         {
