@@ -8,9 +8,6 @@
 import "core-js/features/promise";
 import "whatwg-fetch";
 
-
-
-
 /**
  * Static class providing utility functions for QRadar
  */
@@ -297,6 +294,11 @@ class QRadar {
             "do/assetprofile/AssetDetails?dispatch=viewAssetDetailsFromIp&listName=vulnList" +
             "&domainId=0&ipAddress=" + ipAddress, openWindow === false ? "ASSETS" : null);
     }
+    
+    isUP4AndAbove() {
+        // Creates variables for fetching qradar version, removing the dots and taking the first 6 characters from it, i.e. 202164
+        
+    }
 
     /**
      * Runs an event search with the specified AQL string, either in a new window or the Event Viewer tab.
@@ -308,23 +310,22 @@ class QRadar {
      * @throws Error if aql is not supplied or if the search results could not be displayed.
      *
      */
-    
+  
     static openEventSearch(aql, openWindow)
     {
         if (aql == null)
         {
             throw new Error("You must supply an AQL string");
         }
-        // Creates variables for fetching qradar version, removing the dots and taking the first 6 characters from it, i.e. 202164
-        var get_qradar_version = top.QRADAR_VERSION.replaceAll(".","");
-        var qradar_version = get_qradar_version.substring(0,6);
-        if (qradar_version >= 202164)
+        // If qradar version is greater than 202164 then it is UP4 or above
+        if (QRadar._isUP4AndAbove() >= 202164)
         {
             return QRadar.windowOrTab(
                 "do/ariel/arielSearch?appName=EventViewer&pageId=EventList&dispatch=performSearch" +
                 "&values['timeRangeType']=aqlTime&values['searchMode']=AQL" +
                 "&values['aql']=" + encodeURIComponent(aql), openWindow === false ? "EVENTVIEWER" : null);
         }
+        // Else it must be pre UP4 so UP3 and below
         else
         {
             return QRadar.windowOrTab(
@@ -350,16 +351,15 @@ class QRadar {
         {
             throw new Error("You must supply an AQL string");
         }
-        // Creates variables for fetching qradar version, removing the dots and taking the first 6 characters from it, i.e. 202164
-        var get_qradar_version = top.QRADAR_VERSION.replaceAll(".","");
-        var qradar_version = get_qradar_version.substring(0,6);
-        if (qradar_version >= 202164)
+        // If qradar version is greater than 202164 then it is UP4 or above
+        if (QRadar._isUP4AndAbove() >= 202164)
         {
             return QRadar.windowOrTab(
                 "do/ariel/arielSearch?appName=Surveillance&pageId=FlowList&dispatch=performSearch" +
                 "&values['timeRangeType']=aqlTime&values['searchMode']=AQL" +
                 "&values['aql']=" + encodeURIComponent(aql), openWindow === false ? "FLOWVIEWER" : null);
         }
+        // Else it must be pre UP4 so UP3 and below
         else
         {
             return QRadar.windowOrTab(
@@ -793,6 +793,14 @@ class QRadar {
     static _isFormMimeType(requestMimeType)
     {
         return requestMimeType === QRadar.CONTENT_TYPE_FORM;
+    }
+    static _isUP4AndAbove()
+    {
+        // Creates variables for fetching qradar version, removing the dots and taking the first 6 characters from it, i.e. 202164
+        var fullQradarVersion = top.QRADAR_VERSION.replaceAll(".","");
+        var qradarVersion = fullQradarVersion.substring(0,6);
+        return qradarVersion;
+
     }
 
 }
