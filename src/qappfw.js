@@ -294,11 +294,6 @@ class QRadar {
             "do/assetprofile/AssetDetails?dispatch=viewAssetDetailsFromIp&listName=vulnList" +
             "&domainId=0&ipAddress=" + ipAddress, openWindow === false ? "ASSETS" : null);
     }
-    
-    isUP4AndAbove() {
-        // Creates variables for fetching qradar version, removing the dots and taking the first 6 characters from it, i.e. 202164
-        
-    }
 
     /**
      * Runs an event search with the specified AQL string, either in a new window or the Event Viewer tab.
@@ -318,7 +313,7 @@ class QRadar {
             throw new Error("You must supply an AQL string");
         }
         // If qradar version is greater than 202164 then it is UP4 or above
-        if (QRadar._isUP4AndAbove() >= 202164)
+        if (QRadar._isUP4AndAbove())
         {
             return QRadar.windowOrTab(
                 "do/ariel/arielSearch?appName=EventViewer&pageId=EventList&dispatch=performSearch" +
@@ -352,7 +347,7 @@ class QRadar {
             throw new Error("You must supply an AQL string");
         }
         // If qradar version is greater than 202164 then it is UP4 or above
-        if (QRadar._isUP4AndAbove() >= 202164)
+        if (QRadar._isUP4AndAbove())
         {
             return QRadar.windowOrTab(
                 "do/ariel/arielSearch?appName=Surveillance&pageId=FlowList&dispatch=performSearch" +
@@ -799,8 +794,7 @@ class QRadar {
         // Creates variables for fetching qradar version, removing the dots and taking the first 6 characters from it, i.e. 202164
         var fullQradarVersion = top.QRADAR_VERSION.replaceAll(".","");
         var qradarVersion = fullQradarVersion.substring(0,6);
-        return qradarVersion;
-
+        return qradarVersion >= 202164;
     }
 
 }
