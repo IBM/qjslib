@@ -305,22 +305,34 @@ class QRadar {
      * @throws Error if aql is not supplied or if the search results could not be displayed.
      *
      */
+  
     static openEventSearch(aql, openWindow)
     {
         if (aql == null)
         {
             throw new Error("You must supply an AQL string");
         }
-
-        return QRadar.windowOrTab(
-            "do/ariel/arielSearch?appName=EventViewer&pageId=EventList&dispatch=performSearch" +
-            "&value(timeRangeType)=aqlTime&value(searchMode)=AQL" +
-            "&value(aql)=" + encodeURIComponent(aql), openWindow === false ? "EVENTVIEWER" : null);
+        // If qradar version is greater than 202164 then it is UP4 or above
+        if (QRadar._isUP4AndAbove())
+        {
+            return QRadar.windowOrTab(
+                "do/ariel/arielSearch?appName=EventViewer&pageId=EventList&dispatch=performSearch" +
+                "&values['timeRangeType']=aqlTime&values['searchMode']=AQL" +
+                "&values['aql']=" + encodeURIComponent(aql), openWindow === false ? "EVENTVIEWER" : null);
+        }
+        // Else it must be pre UP4 so UP3 and below
+        else
+        {
+            return QRadar.windowOrTab(
+                "do/ariel/arielSearch?appName=EventViewer&pageId=EventList&dispatch=performSearch" +
+                "&value(timeRangeType)=aqlTime&value(searchMode)=AQL" +
+                "&value(aql)=" + encodeURIComponent(aql), openWindow === false ? "EVENTVIEWER" : null);
+        }
     }
 
     /**
      * Runs a flow search with the specified AQL string, either in a new window or the Flow Viewer tab.
-     *
+     * 
      * @param {String} aql - The AQL search string to execute.
      * @param {boolean} [openWindow=true] - If true, open the search in a new window.
      *                                      Otherwise, open in the Flow Viewer tab.
@@ -334,11 +346,22 @@ class QRadar {
         {
             throw new Error("You must supply an AQL string");
         }
-
-        return QRadar.windowOrTab(
-            "do/ariel/arielSearch?appName=Surveillance&pageId=FlowList&dispatch=performSearch" +
-            "&value(timeRangeType)=aqlTime&value(searchMode)=AQL" +
-            "&value(aql)=" + encodeURIComponent(aql), openWindow === false ? "FLOWVIEWER" : null);
+        // If qradar version is greater than 202164 then it is UP4 or above
+        if (QRadar._isUP4AndAbove())
+        {
+            return QRadar.windowOrTab(
+                "do/ariel/arielSearch?appName=Surveillance&pageId=FlowList&dispatch=performSearch" +
+                "&values['timeRangeType']=aqlTime&values['searchMode']=AQL" +
+                "&values['aql']=" + encodeURIComponent(aql), openWindow === false ? "FLOWVIEWER" : null);
+        }
+        // Else it must be pre UP4 so UP3 and below
+        else
+        {
+            return QRadar.windowOrTab(
+                "do/ariel/arielSearch?appName=Surveillance&pageId=FlowList&dispatch=performSearch" +
+                "&value(timeRangeType)=aqlTime&value(searchMode)=AQL" +
+                "&value(aql)=" + encodeURIComponent(aql), openWindow === false ? "FLOWVIEWER" : null);
+        }
     }
 
     /**
@@ -765,6 +788,13 @@ class QRadar {
     static _isFormMimeType(requestMimeType)
     {
         return requestMimeType === QRadar.CONTENT_TYPE_FORM;
+    }
+    static _isUP4AndAbove()
+    {
+        // Creates variables for fetching qradar version, removing the dots and taking the first 6 characters from it, i.e. 202164
+        var fullQradarVersion = top.QRADAR_VERSION.replaceAll(".","");
+        var qradarVersion = fullQradarVersion.substring(0,6);
+        return qradarVersion >= 202164;
     }
 
 }
