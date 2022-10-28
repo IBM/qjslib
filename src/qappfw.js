@@ -158,10 +158,10 @@ class QRadar {
 
         httpRequest.send(args.body);
     }
-    
+
     /**
      * Uses the fetch API (or polyfilled alternative) to make a HTTP request, returning a promise.
-     * 
+     *
      * @param {String} path - The path to the endpoint.
      * <ul>
      * <li> To call a QRadar REST API, path must start with "/api".
@@ -197,7 +197,7 @@ class QRadar {
         // Create a promise race, allowing a user defined timeout to be set
         return Promise.race([
             window.fetch(url, options),
-            new Promise((_, reject) => 
+            new Promise((_, reject) =>
                 setTimeout(() => reject(new Error(`Unable to reach ${url} after ${options.timeout} ms`)), options.timeout)
             )
         ]);
@@ -222,7 +222,7 @@ class QRadar {
             onComplete: function() {
                 if (this.status === 200) {
                     currentUser = JSON.parse(this.responseText)[0];
-                } 
+                }
             }
         });
 
@@ -305,14 +305,14 @@ class QRadar {
      * @throws Error if aql is not supplied or if the search results could not be displayed.
      *
      */
-  
+
     static openEventSearch(aql, openWindow)
     {
         if (aql == null)
         {
             throw new Error("You must supply an AQL string");
         }
-        // If qradar version is greater than 202164 then it is UP4 or above
+
         if (QRadar._isUP4AndAbove())
         {
             return QRadar.windowOrTab(
@@ -320,7 +320,6 @@ class QRadar {
                 "&values['timeRangeType']=aqlTime&values['searchMode']=AQL" +
                 "&values['aql']=" + encodeURIComponent(aql), openWindow === false ? "EVENTVIEWER" : null);
         }
-        // Else it must be pre UP4 so UP3 and below
         else
         {
             return QRadar.windowOrTab(
@@ -332,7 +331,7 @@ class QRadar {
 
     /**
      * Runs a flow search with the specified AQL string, either in a new window or the Flow Viewer tab.
-     * 
+     *
      * @param {String} aql - The AQL search string to execute.
      * @param {boolean} [openWindow=true] - If true, open the search in a new window.
      *                                      Otherwise, open in the Flow Viewer tab.
@@ -346,7 +345,7 @@ class QRadar {
         {
             throw new Error("You must supply an AQL string");
         }
-        // If qradar version is greater than 202164 then it is UP4 or above
+
         if (QRadar._isUP4AndAbove())
         {
             return QRadar.windowOrTab(
@@ -354,7 +353,6 @@ class QRadar {
                 "&values['timeRangeType']=aqlTime&values['searchMode']=AQL" +
                 "&values['aql']=" + encodeURIComponent(aql), openWindow === false ? "FLOWVIEWER" : null);
         }
-        // Else it must be pre UP4 so UP3 and below
         else
         {
             return QRadar.windowOrTab(
@@ -789,11 +787,38 @@ class QRadar {
     {
         return requestMimeType === QRadar.CONTENT_TYPE_FORM;
     }
+
     static _isUP4AndAbove()
     {
-        // Creates variables for fetching qradar version, removing the dots and taking the first 6 characters from it, i.e. 202164
-        var fullQradarVersion = top.QRADAR_VERSION.replaceAll(".","");
-        var qradarVersion = fullQradarVersion.substring(0,6);
+        var fullQRadarVersion = window.top.QRADAR_VERSION;
+
+        if (fullQRadarVersion === undefined && window.opener !== null) {
+            // First fallback, try to use the opener
+            fullQRadarVersion =  window.opener.top.QRADAR_VERSION;
+        }
+
+        if (fullQRadarVersion === undefined) {
+            // Ultimate fallback, use the API
+            QRadar.rest({
+                async: false,
+                httpMethod: "GET",
+                path: QRadar.getWindowOrigin() + "/api/system/about",
+                headers: {
+                    QRadarCSRF: QRadar.getCookie("QRadarCSRF"),
+                    Version: "19.0"
+                },
+                onComplete: function() {
+                    if (this.status === 200) {
+                        fullQRadarVersion = JSON.parse(this.responseText)["build_version"];
+                    }
+                }
+            });
+        }
+
+        var qradarVersionWithoutDots = fullQRadarVersion.replaceAll(".", "");
+        var qradarVersion = qradarVersionWithoutDots.substring(0, 6);
+
+        // If qradar version is greater than 202164 then it is UP4 or above
         return qradarVersion >= 202164;
     }
 
