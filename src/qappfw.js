@@ -792,12 +792,12 @@ class QRadar {
     {
         var fullQRadarVersion = window.top.QRADAR_VERSION;
 
-        if (fullQRadarVersion === undefined && window.opener !== null) {
+        if (!fullQRadarVersion && window.opener) {
             // First fallback, try to use the opener
             fullQRadarVersion =  window.opener.top.QRADAR_VERSION;
         }
 
-        if (fullQRadarVersion === undefined) {
+        if (!fullQRadarVersion) {
             // Ultimate fallback, use the API
             QRadar.rest({
                 async: false,
