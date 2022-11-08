@@ -603,10 +603,16 @@ function TestQRadar(QRadar) {
             });
         });
 
-        
+
         describe("QRadar.openEventSearch", function () {
             // QRadar.openEventSearch function for QRADAR UP3 and below
-            top.QRADAR_VERSION="2021.6.3.20221014123609";
+            beforeEach(function() {
+                window.opener = {};
+                window.opener.top = {};
+                window.top = {};
+                window.top.QRADAR_VERSION="2021.6.3.20221014123609";
+            });
+
             it("should throw Error if aql is not supplied", function () {
                 expect(function () { QRadar.openEventSearch(); }).toThrowError("You must supply an AQL string");
             });
@@ -655,62 +661,46 @@ function TestQRadar(QRadar) {
                     "&value(timeRangeType)=aqlTime&value(searchMode)=AQL&value(aql)=select%20qid%20from%20events");
                 expect(mockResult.suppliedTabName).toEqual("EVENTVIEWER");
             });
-        }, function () {
-            // QRadar.openEventSearch function for QRADAR UP4+
-            top.QRADAR_VERSION="2021.6.4.20221014123609";
-            it("should throw Error if aql is not supplied", function () {
-                expect(function () { QRadar.openEventSearch(); }).toThrowError("You must supply an AQL string");
-            });
 
-            it("should throw Error if aql is null", function () {
-                expect(function () { QRadar.openEventSearch(null); }).toThrowError("You must supply an AQL string");
-            });
-
-            it("should open in window if openWindow is not supplied", function () {
-                var mockResult = QRadar.openEventSearch("select qid from events");
-                expect(mockResult.suppliedUrl).toEqual(
-                    "https://99.99.99.99/console/do/ariel/arielSearch?appName=EventViewer&pageId=EventList&dispatch=performSearch" +
-                    "&values['timeRangeType']=aqlTime&values['searchMode']=AQL&values['aql']=select%20qid%20from%20events");
-                expect(mockResult.suppliedTabName).toBeNull();
-            });
-
-            it("should open in window if openWindow is undefined", function () {
-                var zzz;
-                var mockResult = QRadar.openEventSearch("select qid from events", zzz);
-                expect(mockResult.suppliedUrl).toEqual(
-                    "https://99.99.99.99/console/do/ariel/arielSearch?appName=EventViewer&pageId=EventList&dispatch=performSearch" +
-                    "&values['timeRangeType']=aqlTime&values['searchMode']=AQL&values['aql']=select%20qid%20from%20events");
-                expect(mockResult.suppliedTabName).toBeNull();
-            });
-
-            it("should open in window if openWindow is null", function () {
-                var mockResult = QRadar.openEventSearch("select qid from events", null);
-                expect(mockResult.suppliedUrl).toEqual(
-                    "https://99.99.99.99/console/do/ariel/arielSearch?appName=EventViewer&pageId=EventList&dispatch=performSearch" +
-                    "&values['timeRangeType']=aqlTime&values['searchMode']=AQL&values['aql']=select%20qid%20from%20events");
-                expect(mockResult.suppliedTabName).toBeNull();
-            });
-
-            it("should open in window if openWindow is true", function () {
-                var mockResult = QRadar.openEventSearch("select qid from events", true);
-                expect(mockResult.suppliedUrl).toEqual(
-                    "https://99.99.99.99/console/do/ariel/arielSearch?appName=EventViewer&pageId=EventList&dispatch=performSearch" +
-                    "&values['timeRangeType']=aqlTime&values['searchMode']=AQL&values['aql']=select%20qid%20from%20events");
-                expect(mockResult.suppliedTabName).toBeNull();
-            });
-
-            it("should open in tab if openWindow is false", function () {
+            it("should open if UP4+ and opening from a QRadar UI tab", function () {
+                window.top.QRADAR_VERSION="2021.6.4.20221014123609";
                 var mockResult = QRadar.openEventSearch("select qid from events", false);
                 expect(mockResult.suppliedUrl).toEqual(
                     "https://99.99.99.99/console/do/ariel/arielSearch?appName=EventViewer&pageId=EventList&dispatch=performSearch" +
                     "&values['timeRangeType']=aqlTime&values['searchMode']=AQL&values['aql']=select%20qid%20from%20events");
                 expect(mockResult.suppliedTabName).toEqual("EVENTVIEWER");
             });
-        });    
+
+            it("should open if UP4+ and opening from a new window", function () {
+                window.top.QRADAR_VERSION=undefined;
+                window.opener.top.QRADAR_VERSION="2021.6.4.20221014123609";
+                var mockResult = QRadar.openEventSearch("select qid from events", false);
+                expect(mockResult.suppliedUrl).toEqual(
+                    "https://99.99.99.99/console/do/ariel/arielSearch?appName=EventViewer&pageId=EventList&dispatch=performSearch" +
+                    "&values['timeRangeType']=aqlTime&values['searchMode']=AQL&values['aql']=select%20qid%20from%20events");
+                expect(mockResult.suppliedTabName).toEqual("EVENTVIEWER");
+            });
+
+            it("should open if UP3 and opening from a new window", function () {
+                window.top.QRADAR_VERSION=undefined;
+                window.opener.top.QRADAR_VERSION="2021.6.3.20221014123609";
+                var mockResult = QRadar.openEventSearch("select qid from events", false);
+                expect(mockResult.suppliedUrl).toEqual(
+                    "https://99.99.99.99/console/do/ariel/arielSearch?appName=EventViewer&pageId=EventList&dispatch=performSearch" +
+                    "&value(timeRangeType)=aqlTime&value(searchMode)=AQL&value(aql)=select%20qid%20from%20events");
+                expect(mockResult.suppliedTabName).toEqual("EVENTVIEWER");
+            });
+        });
 
         describe("QRadar.openFlowSearch", function () {
             // QRadar.openFlowSearch function for QRADAR UP3 and below
-            top.QRADAR_VERSION="2021.6.3.20221014123609";
+            beforeEach(function() {
+                window.opener = {};
+                window.opener.top = {};
+                window.top = {};
+                window.top.QRADAR_VERSION="2021.6.3.20221014123609";
+            });
+
             it("should throw Error if aql is not supplied", function () {
                 expect(function () { QRadar.openFlowSearch(); }).toThrowError("You must supply an AQL string");
             });
@@ -759,55 +749,33 @@ function TestQRadar(QRadar) {
                     "&value(timeRangeType)=aqlTime&value(searchMode)=AQL&value(aql)=select%20qid%20from%20events");
                 expect(mockResult.suppliedTabName).toEqual("FLOWVIEWER");
             });
-        }, function () {
-            // QRadar.openFlowSearch function for QRADAR UP4 and upwards
-            top.QRADAR_VERSION="2021.6.4.20221014123609";
-            it("should throw Error if aql is not supplied", function () {
-                expect(function () { QRadar.openFlowSearch(); }).toThrowError("You must supply an AQL string");
-            });
 
-            it("should throw Error if aql is null", function () {
-                expect(function () { QRadar.openFlowSearch(null); }).toThrowError("You must supply an AQL string");
-            });
-
-            it("should open in window if openWindow is not supplied", function () {
-                var mockResult = QRadar.openFlowSearch("select qid from events");
-                expect(mockResult.suppliedUrl).toEqual(
-                    "https://99.99.99.99/console/do/ariel/arielSearch?appName=Surveillance&pageId=FlowList&dispatch=performSearch" +
-                    "&values['timeRangeType']=aqlTime&values['searchMode']=AQL&values['aql']=select%20qid%20from%20events");
-                expect(mockResult.suppliedTabName).toBeNull();
-            });
-
-            it("should open in window if openWindow is undefined", function () {
-                var zzz;
-                var mockResult = QRadar.openFlowSearch("select qid from events", zzz);
-                expect(mockResult.suppliedUrl).toEqual(
-                    "https://99.99.99.99/console/do/ariel/arielSearch?appName=Surveillance&pageId=FlowList&dispatch=performSearch" +
-                    "&values['timeRangeType']=aqlTime&values['searchMode']=AQL&values['aql']=select%20qid%20from%20events");
-                expect(mockResult.suppliedTabName).toBeNull();
-            });
-
-            it("should open in window if openWindow is null", function () {
-                var mockResult = QRadar.openFlowSearch("select qid from events", null);
-                expect(mockResult.suppliedUrl).toEqual(
-                    "https://99.99.99.99/console/do/ariel/arielSearch?appName=Surveillance&pageId=FlowList&dispatch=performSearch" +
-                    "&values['timeRangeType']=aqlTime&values['searchMode']=AQL&values['aql']=select%20qid%20from%20events");
-                expect(mockResult.suppliedTabName).toBeNull();
-            });
-
-            it("should open in window if openWindow is true", function () {
-                var mockResult = QRadar.openFlowSearch("select qid from events", true);
-                expect(mockResult.suppliedUrl).toEqual(
-                    "https://99.99.99.99/console/do/ariel/arielSearch?appName=Surveillance&pageId=FlowList&dispatch=performSearch" +
-                    "&values['timeRangeType']=aqlTime&values['searchMode']=AQL&values['aql']=select%20qid%20from%20events");
-                expect(mockResult.suppliedTabName).toBeNull();
-            });
-
-            it("should open in tab if openWindow is false", function () {
+            it("should open if UP4+ and opening from a QRadar UI tab", function () {
+                window.top.QRADAR_VERSION="2021.6.4.20221014123609";
                 var mockResult = QRadar.openFlowSearch("select qid from events", false);
                 expect(mockResult.suppliedUrl).toEqual(
                     "https://99.99.99.99/console/do/ariel/arielSearch?appName=Surveillance&pageId=FlowList&dispatch=performSearch" +
                     "&values['timeRangeType']=aqlTime&values['searchMode']=AQL&values['aql']=select%20qid%20from%20events");
+                expect(mockResult.suppliedTabName).toEqual("FLOWVIEWER");
+            });
+
+            it("should open if UP4+ and opening from a new window", function () {
+                window.top.QRADAR_VERSION=undefined;
+                window.opener.top.QRADAR_VERSION="2021.6.4.20221014123609";
+                var mockResult = QRadar.openFlowSearch("select qid from events", false);
+                expect(mockResult.suppliedUrl).toEqual(
+                    "https://99.99.99.99/console/do/ariel/arielSearch?appName=Surveillance&pageId=FlowList&dispatch=performSearch" +
+                    "&values['timeRangeType']=aqlTime&values['searchMode']=AQL&values['aql']=select%20qid%20from%20events");
+                expect(mockResult.suppliedTabName).toEqual("FLOWVIEWER");
+            });
+
+            it("should open if UP3 and opening from a new window", function () {
+                window.top.QRADAR_VERSION=undefined;
+                window.opener.top.QRADAR_VERSION="2021.6.3.20221014123609";
+                var mockResult = QRadar.openFlowSearch("select qid from events", false);
+                expect(mockResult.suppliedUrl).toEqual(
+                    "https://99.99.99.99/console/do/ariel/arielSearch?appName=Surveillance&pageId=FlowList&dispatch=performSearch" +
+                    "&value(timeRangeType)=aqlTime&value(searchMode)=AQL&value(aql)=select%20qid%20from%20events");
                 expect(mockResult.suppliedTabName).toEqual("FLOWVIEWER");
             });
         });
