@@ -44,6 +44,6 @@ jobs:
             qjslib-${{github.ref_name}}.tgz
       - name: Deploy to NPM
         if: github.event_name == 'release'
-        run: npm publish --dry-run
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
