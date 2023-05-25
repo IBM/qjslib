@@ -18,7 +18,6 @@ jobs:
       - name: Lint
         run: npm run lint
       - name: Test
-        uses: GabrielBB/xvfb-action@v1
         with:
           run: npm run test
       - name: SonarQube scan
@@ -46,6 +45,6 @@ jobs:
             qjslib-${{github.ref_name}}.tgz
       - name: Deploy to NPM
         if: github.event_name == 'release'
-        uses: JS-DevTools/npm-publish@v1
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
