@@ -18,8 +18,7 @@ jobs:
       - name: Lint
         run: npm run lint
       - name: Test
-        with:
-          run: npm run test
+        run: npm run test
       - name: SonarQube scan
         if: github.event_name != 'release' && github.repository == 'IBM/qjslib' && github.ref == 'refs/heads/master'
         uses: sonarsource/sonarcloud-github-action@master
