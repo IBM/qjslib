@@ -375,11 +375,11 @@ class QRadar {
      */
     static getNamedService(services, serviceName, serviceVersion)
     {
-        for (let i = 0; i < services.length; i++)
+        for (let service of services)
         {
-            if (services[i].name === serviceName && services[i].version == serviceVersion)
+            if (service.name === serviceName && service.version == serviceVersion)
             {
-                return services[i];
+                return service;
             }
         }
 
@@ -401,11 +401,11 @@ class QRadar {
     {
         if (service.endpoints != null)
         {
-            for (let i = 0; i < service.endpoints.length; i++)
+            for (let endpoint of service.endpoints)
             {
-                if (service.endpoints[i].name === endpointName)
+                if (endpoint.name === endpointName)
                 {
-                    return service.endpoints[i];
+                    return endpoint;
                 }
             }
         }
@@ -448,9 +448,9 @@ class QRadar {
             let parameterDefinition;
             let parameterValue;
 
-            for (let i = 0; i < endpoint.parameters.length; i++)
+            for (let endpointParameter of endpoint.parameters)
             {
-                parameterDefinition = endpoint.parameters[i];
+                parameterDefinition = endpointParameter;
                 parameterValue = (parameterValues == null) ? null : parameterValues[parameterDefinition.name];
 
                 if (parameterValue == null)
@@ -619,13 +619,13 @@ class QRadar {
     {
         let url = path;
 
-        if (path.indexOf(QRadar.PATH_PREFIX_API) === 0)
+        if (path.startsWith(QRadar.PATH_PREFIX_API))
         {
             url = QRadar.getWindowOrigin() + path;
         }
-        else if (path.indexOf(QRadar.PATH_PREFIX_APPLICATION) === 0)
+        else if (path.startsWith(QRadar.PATH_PREFIX_APPLICATION))
         {
-            url = QRadar.getApplicationBaseUrl() + path.substr(QRadar.PATH_PREFIX_APPLICATION.length - 1);
+            url = QRadar.getApplicationBaseUrl() + path.substring(QRadar.PATH_PREFIX_APPLICATION.length - 1);
         }
 
         // Add a timestamp to ensure we don't receive a browser-cached response.
@@ -698,11 +698,11 @@ class QRadar {
 
     static _checkRequiredArguments(functionName, args, required)
     {
-        for (let i = 0; i < required.length; i++)
+        for (let requiredName of required)
         {
-            if (typeof(args[required[i]]) == "undefined" || args[required[i]] == null)
+            if (typeof(args[requiredName]) == "undefined" || args[requiredName] == null)
             {
-                throw new Error("Argument " + required[i] + " is required for function " + functionName);
+                throw new Error("Argument " + requiredName + " is required for function " + functionName);
             }
         }
     }
@@ -790,7 +790,7 @@ class QRadar {
 
     static _isUP4AndAbove()
     {
-        var fullQRadarVersion = window.top.QRADAR_VERSION;
+        let fullQRadarVersion = window.top.QRADAR_VERSION;
 
         if (!fullQRadarVersion && window.opener) {
             // First fallback, try to use the opener
@@ -815,8 +815,8 @@ class QRadar {
             });
         }
 
-        var qradarVersionWithoutDots = fullQRadarVersion.replaceAll(".", "");
-        var qradarVersion = qradarVersionWithoutDots.substring(0, 6);
+        const qradarVersionWithoutDots = fullQRadarVersion.replaceAll(".", "");
+        const qradarVersion = qradarVersionWithoutDots.substring(0, 6);
 
         // If qradar version is greater than 202164 then it is UP4 or above
         return qradarVersion >= 202164;
