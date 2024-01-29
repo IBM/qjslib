@@ -43,7 +43,7 @@ SPDX-License-Identifier: Apache-2.0
 This project uses NPM to handle dependencies and as a build tool, so you must have NodeJS and NPM installed.
 [Get NodeJS here.](https://nodejs.org/en/)
 [Get NPM here.](https://www.npmjs.com/get-npm)
-This project has been set up so that on your local machine you cant lint, test and build easily and quickly. There are three commands you can use:
+This project has been set up so that on your local machine you can lint, test and build easily and quickly. There are three commands you can use:
 
 * npm run lint
 * npm run test
